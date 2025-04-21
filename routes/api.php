@@ -42,3 +42,9 @@ Route::prefix('user')->group(function () {
     });
 });
 
+Route::middleware(['auth:cognito'])->group(function () {
+    Route::post('/profile', [UserProfileController::class, 'store']);
+    Route::get('/profile/{id}', [UserProfileController::class, 'show']);
+});
+
+

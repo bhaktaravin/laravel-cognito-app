@@ -13,7 +13,8 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        \App\Http\Middleare\HandleCors::class
+        \App\Http\Middleare\HandleCors::class,
+        'check.role' => \App\Http\Middleware\CheckUserRole::class
     ];
 
     protected $middlewareGroups = [

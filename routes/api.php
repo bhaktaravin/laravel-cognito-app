@@ -2,7 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Services\CognitoClient;
+use App\Services\DynamoDbService;
+use App\Models\User;
 
 
 
@@ -55,4 +57,31 @@ Route::middleware(['auth:cognito'])->group(function () {
     Route::get('/profile/{id}', [UserProfileController::class, 'show']);
 });
 
+Route::middleware(['aws-cognito', 'check.role:admin'])->group(function(){
+    Route::get('/admin/users', [App\Http\Controllers\AdminController::class, 'listUsers']);
+});
 
+
+Route::get('/test-cognito', [App\Http\Controllers\TestController::class, 'testCognito']);
+Route::get('/test/admin/users', [App\Http\Controllers\TestController::class, 'testDynamoDB']);
+
+Route::get('/test/admin/seed-dynamo', function (DynamoDbService $dynamo) {
+    $user = new User([
+        'id' => 'abc-123',
+        'name' => 'Test User',
+        'email' => 'test@example.com',
+        'password' => 'test123456',
+        'sub' => 'abc-123',
+    ]);
+
+    Auth::login($user);
+
+    $dynamo->putUserItem([
+        'UserId' => $user->sub,
+        'email' => $user->email,
+        'role' => 'admin',
+        'userData' => json_encode($user),
+    ]);
+
+    return 'Seeded!';
+});

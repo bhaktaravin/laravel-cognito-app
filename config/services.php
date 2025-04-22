@@ -40,7 +40,18 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION'),
         'version' => 'latest',
+        'table' => env('DYNAMODB_TABLE'),
         'endpoint' => env('DYNAMODB_ENDPOINT'),
-    ]
+    ],
+
+
+    'cognito' => [
+    'user_pool_id' => env('COGNITO_USER_POOL_ID'),
+    'client_id'    => env('COGNITO_CLIENT_ID'),
+    'region'       => env('AWS_DEFAULT_REGION'),
+    'key'          => env('AWS_ACCESS_KEY_ID'),
+    'secret'       => env('AWS_SECRET_ACCESS_KEY'),
+],
+
 
 ];

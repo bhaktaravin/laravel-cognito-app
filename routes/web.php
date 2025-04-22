@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Services\DynamoDbService;
+
+use App\Models\User;
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,3 +40,24 @@ Route::middleware('aws-cognito')->any('logout/forced', function (\Illuminate\Htt
     Auth::guard()->logout(true);
     return redirect('/');
 })->name('logout_forced');
+
+Route::get('/admin/users', [App\Http\Controllers\AdminController::class, 'listUsers']);
+
+Route::get('/admin/seed-dynamo', function (DynamoDbService $dynamo) {
+    $user = new User([
+        'id' => 'abc-123',
+        'name' => 'Test User',
+        'email' => 'test@example.com',
+        'sub' => 'abc-123',
+    ]);
+
+    Auth::login($user);
+
+    $dynamo->putUserItem([
+        'UserId' => $user->sub,
+        'email' => $user->email,
+        'role' => 'admin',
+    ]);
+
+    return 'Seeded!';
+});

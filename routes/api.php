@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/test-connection', [App\Http\Controllers\HomeController::class, 'test']);
 
-
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 
 Route::prefix('user')->group(function () {
     Route::post('login', [App\Http\Controllers\ApiAuthController::class, 'actionLogin']);

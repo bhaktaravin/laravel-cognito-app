@@ -28,6 +28,7 @@ use Ellaisys\Cognito\Exceptions\AwsCognitoException;
 use Ellaisys\Cognito\Exceptions\NoLocalUserException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
+use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 
 class ApiAuthController extends Controller
 {
@@ -35,10 +36,48 @@ class ApiAuthController extends Controller
     use ChangePassword;
     use RegistersMFA;
 
+    protected $dynamo;
+
+    public function __construct(DynamoDbService $dynamo)
+    {
+        $this->dynamo = $dynamo;
+    }
+
 
     public function actionRegister(Request $request)
     {
-        return $this->register($request);
+        $data = $request->only(['email', 'password', 'name']);
+
+    $client = new CognitoIdentityProviderClient([
+        'region' => env('AWS_DEFAULT_REGION'),
+        'version' => 'latest',
+        'credentials' => [
+            'key' => env('AWS_ACCESS_KEY_ID'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+        ]
+    ]);
+
+    try {
+        $client->signUp([
+            'ClientId' => env('COGNITO_CLIENT_ID'),
+            'Username' => $data['email'],
+            'Password' => $data['password'],
+            'UserAttributes' => [
+                ['Name' => 'email', 'Value' => $data['email']],
+                ['Name' => 'name', 'Value' => $data['name']],
+            ]
+        ]);
+
+        // Optional: store in DynamoDB too
+        $data['id'] = uniqid();
+        $data['created_at'] = now()->toISOString();
+        $this->dynamo->putItem($data);
+
+        return response()->json(['message' => 'Registered successfully. Please check your email to confirm.'], 201);
+
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 400);
+    }
     }
 
     public function actionLogin(Request $request)

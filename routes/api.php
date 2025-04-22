@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,10 +21,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+Route::get('/test-connection', [App\Http\Controllers\HomeController::class, 'test']);
+
+
+
 Route::prefix('user')->group(function () {
     Route::post('login', [App\Http\Controllers\ApiAuthController::class, 'actionLogin']);
     Route::post('register', [App\Http\Controllers\ApiAuthController::class, 'actionRegister']);
     Route::post('/login/mfa', [App\Http\Controllers\ApiMFAController::class, 'actionValidateMFA']);
+
+
 
     Route::group(['middleware' => 'aws-cognito'], function() {
         Route::get('profile', [App\Http\Controllers\AuthController::class, 'getRemoteUser']);

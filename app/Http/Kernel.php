@@ -8,13 +8,12 @@ class Kernel extends HttpKernel
 {
     protected $middleware = [
         \App\Http\Middleware\TrustProxies::class,
-        \Fruitcake\Cors\HandleCors::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        \App\Http\Middleare\HandleCors::class,
-        'check.role' => \App\Http\Middleware\CheckUserRole::class
+        \App\Http\Middleware\HandleCors::class,
+
     ];
 
     protected $middlewareGroups = [
@@ -43,6 +42,8 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'aws-cognito' => \Ellaisys\Cognito\Http\Middleware\AwsCognitoAuthenticate::class
+        'aws-cognito' => \Ellaisys\Cognito\Http\Middleware\AwsCognitoAuthenticate::class,
+        'check.role' => \App\Http\Middleware\CheckUserRole::class,
+        'cors' => \App\Http\Middleware\HandleCors::class
     ];
 }

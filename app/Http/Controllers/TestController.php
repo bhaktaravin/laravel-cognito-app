@@ -6,11 +6,17 @@ use Illuminate\Http\Request;
 use App\Services\CognitoClient;
 
 use Illuminate\Http\JsonResponse;
-
+use App\Services\DynamoDbService;
 
 class TestController extends Controller
 {
     //
+    protected $dynamo;
+
+    public function __construct(DynamoDbService $dynamo)
+    {
+        $this->dynamo = $dynamo;
+    }
 
     public function testCognito(CognitoClient $cognitoClient): JsonResponse
     {
@@ -28,26 +34,11 @@ class TestController extends Controller
         }
     }
 
-    public function testDynamoDB() {
-        $dynamoClient = new \Aws\DynamoDb\DynamoDbClient([
-            'region' => config('services.dynamodb.region'),
-            'version' => 'latest',
-            'credentials' => [
-                'key' => config('services.dynamodb.key'),
-                'secret' => config('services.dynamodb.secret'),
-            ]
-        ]);
+    public function testDynamoDB()
+    {
+        $users = $this->dynamo->listUsers();
+        return response()->json($users);
 
-        try {
-
-            $users = $this->$dynamoClient->listUsers();
-            return response()->json($users);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => $e->getMessage(),
-            ], 500);
-        }
     }
 
 }

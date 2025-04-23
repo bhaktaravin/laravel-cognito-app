@@ -30,7 +30,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 
 Route::prefix('user')->group(function () {
     Route::post('login', [App\Http\Controllers\ApiAuthController::class, 'actionLogin']);
-    Route::post('register', [App\Http\Controllers\ApiAuthController::class, 'actionRegister']);
+    Route::post('register', [App\Http\Controllers\ApiAuthController::class, 'actionRegister'])->middleware('cors');
     Route::post('/login/mfa', [App\Http\Controllers\ApiMFAController::class, 'actionValidateMFA']);
 
 
@@ -63,7 +63,7 @@ Route::middleware(['aws-cognito', 'check.role:admin'])->group(function(){
 
 
 Route::get('/test-cognito', [App\Http\Controllers\TestController::class, 'testCognito']);
-Route::get('/test/admin/users', [App\Http\Controllers\TestController::class, 'testDynamoDB']);
+Route::get('/test/admin/users', [App\Http\Controllers\TestController::class, 'listUsers']);
 
 Route::get('/test/admin/seed-dynamo', function (DynamoDbService $dynamo) {
     $user = new User([

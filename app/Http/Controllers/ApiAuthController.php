@@ -65,6 +65,11 @@ class ApiAuthController extends Controller
             'UserAttributes' => [
                 ['Name' => 'email', 'Value' => $data['email']],
                 ['Name' => 'name', 'Value' => $data['name']],
+                ['Name' => 'custom:role', 'Value' => 'user'],
+                ['Name' => 'phone_number', 'Value' => $data['phone_number']],
+                ['Name' => 'password', 'Value' => $data['password']],
+                ['Name' => 'username', 'Value' => $data['username']],
+
             ]
         ]);
 

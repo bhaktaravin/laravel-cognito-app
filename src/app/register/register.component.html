@@ -1,0 +1,38 @@
+<div class="register-container">
+  <h2>Create Account</h2>
+
+  <form (ngSubmit)="register()" #registerForm="ngForm">
+    <div>
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" [(ngModel)]="user.name" required />
+    </div>
+
+    <div>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" [(ngModel)]="user.email" required />
+    </div>
+
+    <div>
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" [(ngModel)]="user.password" required />
+    </div>
+
+    <button type="submit" [disabled]="isLoading">
+      {{ isLoading ? 'Registering...' : 'Register' }}
+    </button>
+  </form>
+
+  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  <p *ngIf="successMessage" class="success-message">{{ successMessage }}</p>
+
+  <!-- Debug information section -->
+  <div *ngIf="debugResponse" class="debug-section">
+    <h3>Debug Response:</h3>
+    <pre>{{ debugResponse | json }}</pre>
+  </div>
+
+  <div class="login-link">
+    Already have an account?
+    <a href="#" (click)="gotoLogin()">Login</a>
+  </div>
+</div>

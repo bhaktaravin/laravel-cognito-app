@@ -1,0 +1,14 @@
+<nav *ngIf="showNavbar">
+  <ul>
+  <a routerLink="/home">Home</a>
+    <a routerLink="/login">Login</a>
+    <a routerLink="/register">Register</a>
+  </ul>
+
+  <!-- Dark Mode Toggle Button -->
+  <button (click)="toggleDarkMode()">Toggle Dark Mode</button>
+</nav>
+
+<main>
+  <router-outlet></router-outlet>
+</main>

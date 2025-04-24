@@ -1,0 +1,112 @@
+/* You can add global styles to this file, and also import other style files */
+/* Define your light mode default (can be the system default) */
+/* Default theme (Light mode) */
+/* Default theme (Light mode) */
+:root {
+  --background-color: #ffffff;
+  --text-color: #000000;
+  --link-color: #007bff;
+  --navbar-background: #f8f9fa;
+  --navbar-text-color: #333;
+}
+
+/* Dark mode variables */
+body.dark-mode {
+  --background-color: #121212;
+  --text-color: #e0e0e0;
+  --link-color: #1e90ff;
+  --navbar-background: #333;
+  --navbar-text-color: #f1f1f1;
+}
+
+/* Global reset for consistency */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%; /* Ensure body takes up full height */
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Ensure the content starts from the top */
+  align-items: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+body.dark-mode {
+  --background-color: #121212;
+  --text-color: #e0e0e0;
+  --link-color: #1e90ff;
+  --navbar-background: #333;
+  --navbar-text-color: #f1f1f1;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Main content container */
+main {
+  width: 100%; /* Full width */
+  max-width: 900px; /* Maximum width to avoid stretching too wide */
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--background-color);
+  transition: background-color 0.3s ease;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Navbar */
+nav {
+  background-color: var(--navbar-background);
+  color: var(--navbar-text-color);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav a {
+  color: var(--navbar-text-color);
+  margin: 0 15px;
+  text-decoration: none;
+}
+
+button {
+  background-color: var(--navbar-background);
+  color: var(--navbar-text-color);
+  border: 1px solid var(--navbar-text-color);
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--link-color);
+  color: #fff;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+

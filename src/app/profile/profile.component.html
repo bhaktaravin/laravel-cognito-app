@@ -1,0 +1,19 @@
+<div class="container">
+  <h2>User Profile</h2>
+
+  <form (ngSubmit)="save()">
+    <div>
+      <label>Name:</label>
+      <input [(ngModel)]="profile.name" name="name" required>
+    </div>
+
+    <div>
+      <label>Email:</label>
+      <input [(ngModel)]="profile.email" name="email" required>
+    </div>
+
+    <button type="submit">Save</button>
+  </form>
+
+  <p>{{ message }}</p>
+</div>

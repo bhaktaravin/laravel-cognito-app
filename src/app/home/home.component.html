@@ -1,0 +1,27 @@
+<div class="home-container">
+  <h1>{{ welcomeMessage }}</h1>
+
+  <div class="loading-indicator" *ngIf="isLoading">
+    Loading...
+  </div>
+
+  <div class="error-message" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <div class="profile-container" *ngIf="userProfile && !isLoading">
+    <h2>Your Profile</h2>
+    <div class="profile-info">
+      <p><strong>Name:</strong> {{ userProfile.name }}</p>
+      <p><strong>Email:</strong> {{ userProfile.email }}</p>
+      <p><strong>User ID:</strong> {{ userProfile.sub || userProfile.id }}</p>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="test-button" (click)="testConnections()" [disabled]="isLoading">
+      {{ isLoading ? 'Testing...' : 'Test AWS Connections' }}
+    </button>
+    <button class="logout-button" (click)="logout()">Logout</button>
+  </div>
+</div>
